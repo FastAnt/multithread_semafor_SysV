@@ -26,7 +26,7 @@ int main(void)
   key = ftok("/etc/fstab", getpid());
 
   /* создать только один семафор: */
-  semid = semget(key, 1, 0666 | IPC_CREAT);
+  semid = semget(key, 16, 0666 | IPC_CREAT);
 
   return 0;
 }
