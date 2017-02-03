@@ -27,6 +27,10 @@ int main(void)
 
   /* создать только один семафор: */
   semid = semget(key, 16, 0666 | IPC_CREAT);
+  for (int i = 0 ; i < 16 ; i++)
+  {
+     semctl(semid, i, SETVAL, i);	
+  }
 
   return 0;
 }
