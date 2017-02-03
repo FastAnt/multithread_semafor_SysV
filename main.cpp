@@ -16,21 +16,29 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
-
+union semun {
+    int val;
+    struct semid_ds *buf;
+    unsigned short  *array;
+} arg;
 
 int main(void)
 {
   key_t key;
   int semid;
 
-  key = ftok("/etc/fstab", getpid());
+  key = ftok("/tmp/sem.temp", getpid());
 
   /* создать только один семафор: */
+
   semid = semget(key, 16, 0666 | IPC_CREAT);
+
+struct sembuf sem_opt[16];
   for (int i = 0 ; i < 16 ; i++)
   {
-     semctl(semid, i, SETVAL, i);	
+     arg.val = i;
+     semctl(semid, i, SETVAL, arg);	
   }
-
+  pause();
   return 0;
 }
