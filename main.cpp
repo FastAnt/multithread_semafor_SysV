@@ -38,6 +38,7 @@ struct sembuf sem_opt[16];
   {
      arg.val = i;
      semctl(semid, i, SETVAL, arg);	
+         semctl(semid, i, IPC_RMID, arg);
   }
   pause();
   return 0;
